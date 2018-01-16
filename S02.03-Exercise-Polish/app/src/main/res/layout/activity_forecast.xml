@@ -14,21 +14,43 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/tv_weather_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:textSize="20sp" />
+        </ScrollView>
 
         <TextView
-            android:id="@+id/tv_weather_data"
+            android:id="@+id/tv_err_str"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
             android:padding="16dp"
-            android:textSize="20sp" />
-    </ScrollView>
+            android:textSize="22dp"
+            android:text="@string/err_message"/>
+
+        <ProgressBar
+            android:id="@+id/pr_bar"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:visibility="invisible"
+            android:layout_gravity="center"
+            />
+    </FrameLayout>
 
     <!--TODO (2) Add a TextView that you will show the user if there is an error loading content-->
     <!--TODO (3) Make the width and the height wrap_content-->
@@ -40,4 +62,4 @@
     <!--TODO (14) Set the layout_gravity of the ProgressBar to center-->
     <!--TODO (15) Set the default visibility of the ProgressBar to invisible-->
 
-</FrameLayout>
+</LinearLayout>

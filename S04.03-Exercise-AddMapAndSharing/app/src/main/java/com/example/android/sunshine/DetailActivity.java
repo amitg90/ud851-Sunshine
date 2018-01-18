@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import static android.support.v4.app.ShareCompat.*;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -50,12 +53,15 @@ public class DetailActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_share) {
+            Log.e("AMIT", "SHARING");
             String mimeType = "text/plain";
             String title = "Sharing Forecast";
             String share = mForecast;
-            ShareCompat.IntentBuilder.from(this).setChooserTitle(title)
+
+            IntentBuilder intent = IntentBuilder.from(this).setChooserTitle(title)
                     .setType(mimeType)
                     .setText(share);
+            startActivity(intent.getIntent());
             return true;
         }
 

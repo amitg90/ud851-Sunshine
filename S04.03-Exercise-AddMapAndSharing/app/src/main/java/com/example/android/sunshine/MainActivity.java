@@ -222,6 +222,10 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
         }
 
         // TODO (2) Launch the map when the map menu item is clicked
+        if (id == R.id.open_map) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            startActivity(intent);
+        }
 
         return super.onOptionsItemSelected(item);
     }

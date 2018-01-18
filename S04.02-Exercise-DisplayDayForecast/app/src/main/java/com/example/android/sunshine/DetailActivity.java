@@ -24,6 +24,5 @@ public class DetailActivity extends AppCompatActivity {
             String data = intent.getStringExtra(Intent.EXTRA_TEXT);
             textView.setText(data);
         }
-        
     }
 }

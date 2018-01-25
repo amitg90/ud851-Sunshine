@@ -15,6 +15,7 @@
  */
 package com.example.android.sunshine;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -44,6 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Do step 9 within onCreatePreference
         // TODO (9) Set the preference summary on each preference that isn't a CheckBoxPreference
+
 
         // TODO (13) Unregister SettingsFragment (this) as a SharedPreferenceChangedListener in onStop
 

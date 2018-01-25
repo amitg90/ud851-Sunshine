@@ -36,15 +36,18 @@ public class SettingActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == android.R.id.home) {
+            onBackPressed();
 
+            /*
             if (intentThatStartedThisActivity != null) {
                 Log.e("AMIT!!!!", "Pushing Data to activity");
-                SharedPreferences sharedPref = getSharedPreferences("myPrefs", Context.
+                //SharedPreferences sharedPref = getSharedPreferences("myPrefs", Context.
                         MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putString(Intent.EXTRA_TEXT, weatherData);
-                editor.commit();
+                //SharedPreferences.Editor editor = sharedPref.edit();
+                //editor.putString(Intent.EXTRA_TEXT, weatherData);
+                //editor.commit();
             }
+            */
         }
         return super.onOptionsItemSelected(item);
     }

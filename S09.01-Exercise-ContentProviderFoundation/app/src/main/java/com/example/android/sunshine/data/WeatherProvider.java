@@ -110,7 +110,12 @@ public class WeatherProvider extends ContentProvider {
         if (match == CODE_WEATHER) {
             cursor = db.query(WeatherContract.WeatherEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
         } else if (match == CODE_WEATHER_WITH_DATE) {
-            cursor = db.query(WeatherContract.WeatherEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+            String mSelection = WeatherContract.WeatherEntry.COLUMN_DATE + " = ?";
+            String normalizedUtcDateString = uri.getLastPathSegment();
+
+            String[] mSelectionArguments = new String[]{normalizedUtcDateString};
+
+            cursor = db.query(WeatherContract.WeatherEntry.TABLE_NAME, projection, mSelection, mSelectionArguments, null, null, sortOrder);
         } else {
             throw new UnsupportedOperationException("Invalid");
         }

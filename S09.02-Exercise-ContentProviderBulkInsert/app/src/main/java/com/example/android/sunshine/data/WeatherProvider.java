@@ -20,8 +20,11 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+
+import com.example.android.sunshine.utilities.SunshineDateUtils;
 
 /**
  * This class serves as the ContentProvider for all of Sunshine's data. This class allows us to
@@ -138,13 +141,41 @@ public class WeatherProvider extends ContentProvider {
      */
     @Override
     public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
-        throw new RuntimeException("Student, you need to implement the bulkInsert method!");
 
 //          TODO (2) Only perform our implementation of bulkInsert if the URI matches the CODE_WEATHER code
+        int row_inserted = 0;
+        int match = sUriMatcher.match(uri);
+        SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
+        if (match != CODE_WEATHER) {
+            return super.bulkInsert(uri, values);
+        }
+
+        try {
+            db.beginTransaction();
+            for (ContentValues value : values) {
+                long date = value.getAsLong(WeatherContract.WeatherEntry.COLUMN_DATE);
+                if (SunshineDateUtils.isDateNormalized(date) == false) {
+                    throw new IllegalArgumentException(("Invalid date"));
+                }
+
+                long id = db.insert(WeatherContract.WeatherEntry.TABLE_NAME, null, value);
+                if (id != -1) {
+                    row_inserted++;
+                }
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
 
 //              TODO (3) Return the number of rows inserted from our implementation of bulkInsert
 
 //          TODO (4) If the URI does match match CODE_WEATHER, return the super implementation of bulkInsert
+        if(row_inserted > 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return (row_inserted);
     }
 
     /**
@@ -274,7 +305,12 @@ public class WeatherProvider extends ContentProvider {
      */
     @Override
     public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
-        throw new RuntimeException("Student, you need to implement the delete method!");
+        SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+
+        int entries = db.delete(WeatherContract.WeatherEntry.TABLE_NAME, selection, selectionArgs);
+
+        getContext().getContentResolver().notifyChange(uri, null);
+        return entries;
     }
 
     /**
